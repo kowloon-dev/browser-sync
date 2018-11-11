@@ -1,11 +1,11 @@
 # browser-sync
 Node.js browser-syncのサンプル
 
-# 環境
+# パッケージのインストール
 
-## gulp
+## Gulpとbrowser-syncのインストール
 
-gulpをCLIから使えるように、-gオプション付きでインストール
+GulpをCLIから使えるように、-gオプション付きでインストール
 
 ```
 npm install -g gulp-cli
@@ -35,4 +35,72 @@ npm install --save gulp
 npm install --save browser-sync
 ```
 
+# 監視対象のファイルを準備
 
+/htdocs/index.html
+
+```
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>shot timer result</title>
+</head>
+<body>
+
+<style>
+p{
+    margin: 0 0 10px;
+}
+.textarea{
+    padding: 0 0 10px;
+}
+.txtWrap{
+    font-size: 10px;
+}
+
+.txt40{
+    font-size: 40vw;
+}
+</style>
+
+<div class="textarea">
+    <p class="txt40">8.88</p>
+</div>
+
+</body>
+</html>
+
+```
+
+
+# Gulp側の準備
+
+gulpfile.js
+
+```
+var gulp = require('gulp');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
+
+
+gulp.task('default', ['browser-sync']);
+
+gulp.task('browser-sync', function () {
+  browserSync({
+    notify: false,
+    server: {
+      baseDir: "htdocs"
+    }
+  });
+
+gulp.watch('htdocs/index.html', reload);
+});
+```
+
+
+# Gulpの起動
+
+```
+$ gulp
+```
